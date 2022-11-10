@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -10,6 +10,7 @@
     <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
     <script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/webjars/js-cookie/js.cookie.js"></script>
     <script type="text/javascript">
         $.ajaxSetup({
             beforeSend : function(xhr, settings) {
@@ -26,6 +27,7 @@
         });
         $.get("/user", function(data) {
             $("#user").html(data.name);
+            console.log('user : ' + data.name)
             $(".unauthenticated").hide()
             $(".authenticated").show()
         });
@@ -38,21 +40,25 @@
             return true;
         }
     </script>
-    <script type="text/javascript" src="/webjars/js-cookie/js.cookie.js"></script>
 
 </head>
 <body>
-<div class="container unauthenticated">
-    <span></span>
-    <form>
-        <input type="button" onclick="location.href='/oauth2/authorization/prosanteconnect';" value="S'authentifier avec Github"
-               class="btn btn-primary">
-    </form>
-</div>
-<div class="container authenticated" style="display:none">
-    Bienvenue <span id="user"></span> ! Vous êtes bien connecté.
-    <div>
-        <button onClick="logout()" class="btn btn-primary">Logout</button>
+<div style="margin-top: 200px">
+    <div class="container unauthenticated" >
+        <form>
+            <input type="button" onclick="location.href='/oauth2/authorization/github';" value="S'authentifier avec ProSanteConnect"
+                   class="btn btn-primary">
+        </form>
+    </div>
+    <div class="container authenticated" style="display:none">
+        Bienvenue <span id="user"></span> ! Vous êtes bien connecté.
+        <div style="margin-top: 20px; margin-bottom: 5px">
+            <button onClick="logout()" class="btn btn-primary">Logout</button>
+        </div>
+        <form>
+            <input type="button" onclick="location.href='/dossier-patient';" value="Accéder au formulaire"
+                   class="btn btn-primary">
+        </form>
     </div>
 </div>
 </body>
